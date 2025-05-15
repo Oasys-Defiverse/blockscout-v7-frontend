@@ -8,6 +8,6 @@ services:
     ports:
       - "3000:3000"
     env_file:
-      - configs/envs/.env.common
+      - configs/envs/.env.${NETWORK_NAME:-defiverse}
     container_name: blockscout-frontend
     restart: unless-stopped 

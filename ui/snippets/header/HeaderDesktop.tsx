@@ -20,7 +20,7 @@ const HeaderDesktop = ({ renderSearchBar }: Props) => {
       as="header"
       display={{ base: 'none', lg: 'flex' }}
       width="100%"
-      alignItems="center"
+      alignItems="flex-start"
       justifyContent="center"
       gap={ 6 }
     >
