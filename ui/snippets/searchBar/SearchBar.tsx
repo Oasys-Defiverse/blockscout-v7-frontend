@@ -7,6 +7,8 @@ import {
   PopoverFooter,
   useDisclosure,
   useOutsideClick,
+  Link,
+  Image,
 } from '@chakra-ui/react';
 import { debounce } from 'es-toolkit';
 import { useRouter } from 'next/router';
@@ -17,6 +19,7 @@ import { Element } from 'react-scroll';
 import type { Route } from 'nextjs-routes';
 import { route } from 'nextjs-routes';
 
+import { useScrollDirection } from 'lib/contexts/scrollDirection';
 import useIsMobile from 'lib/hooks/useIsMobile';
 import * as mixpanel from 'lib/mixpanel/index';
 import { getRecentSearchKeywords, saveToRecentKeywords } from 'lib/recentSearchKeywords';
@@ -28,7 +31,6 @@ import SearchBarInput from './SearchBarInput';
 import SearchBarRecentKeywords from './SearchBarRecentKeywords';
 import SearchBarSuggest from './SearchBarSuggest/SearchBarSuggest';
 import useQuickSearchQuery from './useQuickSearchQuery';
-
 type Props = {
   isHomepage?: boolean;
 };
@@ -43,6 +45,7 @@ const SearchBar = ({ isHomepage }: Props) => {
   const menuWidth = React.useRef<number>(0);
   const isMobile = useIsMobile();
   const router = useRouter();
+  const scrollDirection = useScrollDirection();
 
   const recentSearchKeywords = getRecentSearchKeywords();
 
@@ -123,7 +126,9 @@ const SearchBar = ({ isHomepage }: Props) => {
       resizeObserver.unobserve(inputEl);
     };
   }, [ calculateMenuWidth ]);
-
+  const transformMobile =  scrollDirection !== 'down' ? 'translateY(0)' : isMobile ?  'translateY(-200%)' : 'translateY(0)';
+  const positionMobile = scrollDirection !== 'down' ? 'relative' :  isMobile ? 'absolute' : 'relative';
+  const zIndexMobile = scrollDirection !== 'down' ? undefined : isMobile ? -1 : undefined;
   return (
     <>
       <Popover
@@ -135,17 +140,45 @@ const SearchBar = ({ isHomepage }: Props) => {
         isLazy
       >
         <PopoverTrigger>
-          <SearchBarInput
-            ref={ inputRef }
-            onChange={ handleSearchTermChange }
-            onSubmit={ handleSubmit }
-            onFocus={ handleFocus }
-            onHide={ handelHide }
-            onClear={ handleClear }
-            isHomepage={ isHomepage }
-            value={ searchTerm }
-            isSuggestOpen={ isOpen }
-          />
+          <>
+            <SearchBarInput
+              ref={ inputRef }
+              onChange={ handleSearchTermChange }
+              onSubmit={ handleSubmit }
+              onFocus={ handleFocus }
+              onHide={ handelHide }
+              onClear={ handleClear }
+              isHomepage={ isHomepage }
+              value={ searchTerm }
+              isSuggestOpen={ isOpen }
+            />
+            { !isHomepage && (
+              <Box
+                w="100%"
+                paddingX={{ base: 4, lg: 0 }}
+                position={{ base: positionMobile, lg: 'relative' }}
+                zIndex={{ base: zIndexMobile, lg: undefined }}
+                paddingTop={{ base: 9, lg: 0 }}
+                transform={{ base: transformMobile, lg: 'none' }}
+                transitionProperty="transform,box-shadow,background-color,color,border-color"
+                transitionDuration="normal"
+                transitionTimingFunction="ease"
+                mt={ 4 }>
+                <Link href="https://phoenix.chaincolosseum.org" isExternal>
+                  <Image
+                    src="/static/ads_banner.jpg"
+                    objectFit="contain"
+                    maxW="100%"
+                    maxH="100%"
+                    objectPosition="center"
+                    alt="banner ads"
+                    margin="0 auto"
+                  />
+                </Link>
+              </Box>
+            ) }
+          </>
+
         </PopoverTrigger>
         <Portal>
           <PopoverContent

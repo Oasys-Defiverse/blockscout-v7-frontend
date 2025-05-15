@@ -1,13 +1,13 @@
 {
   "name": "blockscout-frontend",
   "version": "1.0.0",
-  "private": false,
   "homepage": "https://github.com/blockscout/frontend#readme",
   "engines": {
     "node": "22.11.0",
     "npm": "10.9.0"
   },
   "scripts": {
+    "next-dev": "./tools/scripts/dev.sh && next dev",
     "dev": "./tools/scripts/dev.sh",
     "dev:preset": "./tools/scripts/dev.preset.sh",
     "dev:preset:sync": "tsc -p ./tools/preset-sync/tsconfig.json && node ./tools/preset-sync/index.js",
@@ -144,7 +144,6 @@
     "@types/dom-to-image": "^2.6.4",
     "@types/jest": "^29.2.0",
     "@types/js-cookie": "^3.0.2",
-    "lottie-react": "^2.4.0",
     "@types/mixpanel-browser": "^2.38.1",
     "@types/node": "20.16.7",
     "@types/phoenix": "^1.5.4",
@@ -175,6 +174,7 @@
     "jest-environment-jsdom": "^29.2.1",
     "jest-fetch-mock": "^3.0.3",
     "lint-staged": ">=10",
+    "lottie-react": "^2.4.0",
     "mockdate": "^3.0.5",
     "style-loader": "^3.3.1",
     "svg-icons-cli": "^0.0.5",
@@ -193,5 +193,6 @@
   "resolutions": {
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1"
-  }
+  },
+  "packageManager": "yarn@4.6.0+sha512.5383cc12567a95f1d668fbe762dfe0075c595b4bfff433be478dbbe24e05251a8e8c3eb992a986667c1d53b6c3a9c85b8398c35a960587fbd9fa3a0915406728"
 }

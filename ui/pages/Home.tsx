@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Link, Image } from '@chakra-ui/react';
 import React from 'react';
 
 import config from 'configs/app';
@@ -31,6 +31,18 @@ const Home = () => {
   return (
     <Box as="main">
       <HeroBanner/>
+      <Box w="100%" mt={ 4 }>
+        <Link href="https://phoenix.chaincolosseum.org" isExternal><Image
+          src="/static/ads_banner.jpg"
+          objectFit="contain"
+          maxW="100%"
+          maxH="100%"
+          objectPosition="center"
+          alt="banner ads"
+        />
+        </Link>
+      </Box>
+
       <Flex flexDir={{ base: 'column', lg: 'row' }} columnGap={ 2 } rowGap={ 1 } mt={ 3 } _empty={{ mt: 0 }}>
         <Stats/>
         <ChainIndicators/>
